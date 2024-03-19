@@ -18,7 +18,7 @@ public:
         temp->next = head;
         head = temp;
         if (tail == nullptr) {
-            tail = head; // Update tail if it's the first node
+            tail = head = temp; // Update tail if it's the first node
         }
         
     }
@@ -35,6 +35,57 @@ public:
             tail = temp; // Update tail to the new node
         }
 
+    }
+
+    static void insert_at_position(Node* &tail,Node* &head,int position,int d)
+    {
+        if(position==1)
+        {
+            insert_at_head(head,tail,d);
+            return;
+        }
+        int count = 1;
+        Node* temp = head;
+        while(count<position-1)
+        {
+            temp=temp->next;
+            count++;
+        }
+        if (temp == nullptr)
+    {
+        cerr << "Invalid position\n";
+        return;
+    }
+        Node* insert_at_position = new Node();
+        insert_at_position->data = d;
+        insert_at_position->next = nullptr;
+        insert_at_position->next = temp->next;
+        temp->next = insert_at_position;
+         
+        if(temp->next == nullptr)
+        {
+            insert_at_tail(tail,head, d);
+            return;
+        }
+
+    }
+
+    static void reverse(Node* &head,Node* &tail)
+    {
+        Node* prev=nullptr;
+        Node* curr = head;
+        Node* forward = nullptr;
+
+        while(curr!=nullptr)
+        {
+            forward = curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=forward;
+        }
+    
+        tail= head;
+        head=prev;
     }
 
     static void print(Node* &head)
@@ -55,7 +106,13 @@ Node* tail = nullptr;
 
 
 Node::insert_at_head(head,tail,1);
-Node ::insert_at_tail(tail,head,5);
+Node::insert_at_tail(tail,head,5);
+Node:: print(head);
+Node ::insert_at_tail(tail,head,6);
+Node:: print(head);
+Node::insert_at_position(tail,head,2,4);
+Node:: print(head);
+Node:: reverse(head,tail);
 Node:: print(head);
 return 0;
 }
